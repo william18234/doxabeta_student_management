@@ -1,0 +1,77 @@
+# Default configuration profile — used whenever the app is started with no
+# --spring.profiles.active flag (e.g. `./mvnw spring-boot:run` or running
+# Application.java directly in an IDE). This is the "just works, no setup"
+# profile: an in-memory H2 database that resets every time the app restarts,
+# which is why SeedService re-populates it from students.csv on every startup.
+#
+# To run against real PostgreSQL instead, activate the "postgres" profile
+# (see application-postgres.yml), e.g.:
+#   ./mvnw spring-boot:run -Dspring-boot.run.profiles=postgres
+
+spring:
+  application:
+    name: doxabeta-management
+
+  datasource:
+    # H2 "mem" mode = the whole database lives in RAM and disappears when the
+    # JVM stops. DB_CLOSE_DELAY=-1 keeps the in-memory database alive for the
+    # lifetime of the app (without it, H2 would wipe the database as soon as
+    # the last connection closed, which happens between requests).
+    url: jdbc:h2:mem:doxadb;DB_CLOSE_DELAY=-1
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: ""
+
+  h2:
+    console:
+      # Enables the H2 web console at /h2-console (see SecurityConfig, which
+      # permits this path without login, and README.md for the JDBC URL to
+      # use when connecting). Handy for poking at the seeded data directly.
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    hibernate:
+      # "update": Hibernate compares the entity classes to the current schema
+      # at startup and adds any missing tables/columns automatically — no
+      # manual migration scripts needed for this prototype. (Note: this is
+      # convenient for development but not how you'd want a production
+      # database managed long-term; a real migration tool like Flyway/Liquibase
+      # would replace this for a production deployment.)
+      ddl-auto: update
+    show-sql: false
+    # IMPORTANT: with open-in-view disabled, the JPA/Hibernate session closes
+    # as soon as a repository call returns, rather than staying open for the
+    # entire HTTP request. This is why every service method that touches lazy
+    # associations (Student.cohort, Student.mentor, etc.) is wrapped in
+    # @Transactional — see the comments on StudentService and StudentResponse
+    # for the full explanation of why this matters.
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  port: 8080
+
+# Custom application properties (not a standard Spring Boot key) — read via
+# @Value(...) in SecurityConfig. Every value here is sourced from an
+# environment variable with a fallback default, so the app runs out of the
+# box with no .env file, but can be overridden for a real deployment.
+# See .env.example for the full list of environment variables.
+app:
+  cors:
+    allowed-origins: ${CORS_ALLOWED_ORIGINS:*}
+  security:
+    admin-password: ${ADMIN_PASSWORD:admin123}
+    mentor-password: ${MENTOR_PASSWORD:mentor123}
+    student-password: ${STUDENT_PASSWORD:student123}
+
+# springdoc-openapi auto-generates an OpenAPI spec from the controllers/DTOs
+# and serves an interactive Swagger UI from it — no manual API documentation
+# to maintain. See README.md for the URL.
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
+  api-docs:
+    path: /v3/api-docs

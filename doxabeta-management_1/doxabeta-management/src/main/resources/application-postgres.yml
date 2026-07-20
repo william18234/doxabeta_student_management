@@ -1,0 +1,41 @@
+# "postgres" profile — overrides/extends application.yml's defaults for
+# running against a real PostgreSQL database instead of in-memory H2.
+#
+# Activate with: ./mvnw spring-boot:run -Dspring-boot.run.profiles=postgres
+# (or set SPRING_PROFILES_ACTIVE=postgres as an environment variable, which
+# is the usual approach on a hosting platform like Render or Railway).
+#
+# Spring merges this file's keys on top of application.yml's — anything not
+# overridden here (server.port, app.cors.*, app.security.*, springdoc.*)
+# still comes from application.yml.
+
+spring:
+  datasource:
+    # All three connection settings default to a local Postgres instance
+    # (matching docker-compose-style local setups) but are meant to be
+    # overridden via environment variables when deploying — see
+    # .env.example and README.md's PostgreSQL section.
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/doxabeta}
+    username: ${DATABASE_USERNAME:postgres}
+    password: ${DATABASE_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      # Same auto-migration behavior as the H2 profile — see the comment in
+      # application.yml for the caveat about this vs. a real migration tool.
+      ddl-auto: update
+    show-sql: false
+    # Same reasoning as application.yml — see that file's comment.
+    open-in-view: false
+    properties:
+      hibernate:
+        # Tells Hibernate to generate PostgreSQL-flavored SQL (data types,
+        # syntax quirks, etc.) instead of the H2 dialect used by default.
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  h2:
+    console:
+      # No H2 database in this profile, so there's nothing for the H2 console
+      # to connect to — explicitly disabled to avoid a confusing dead page.
+      enabled: false
