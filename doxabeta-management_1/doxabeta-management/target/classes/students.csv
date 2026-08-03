@@ -1,0 +1,11 @@
+studentCode,studentName,studentEmail,status,cohortName,mentorCode,mentorName,mentorEmail
+STU001,Amara Okafor,amara.okafor@example.com,ACTIVE,2026A,MEN001,Grace Whitfield,grace.whitfield@example.com
+STU002,Liam Chen,liam.chen@example.com,ACTIVE,2026A,MEN001,Grace Whitfield,grace.whitfield@example.com
+STU003,Sofia Ramirez,sofia.ramirez@example.com,ACTIVE,2026A,MEN002,David Okonkwo,david.okonkwo@example.com
+STU004,Noah Williams,noah.williams@example.com,PAUSED,2026A,MEN002,David Okonkwo,david.okonkwo@example.com
+STU005,Priya Patel,priya.patel@example.com,ACTIVE,2026B,MEN003,Hannah Reyes,hannah.reyes@example.com
+STU006,Ethan Kim,ethan.kim@example.com,ACTIVE,2026B,MEN003,Hannah Reyes,hannah.reyes@example.com
+STU007,Zainab Bello,zainab.bello@example.com,ACTIVE,2026B,MEN001,Grace Whitfield,grace.whitfield@example.com
+STU008,Marcus Johnson,marcus.johnson@example.com,COMPLETED,2026A,MEN002,David Okonkwo,david.okonkwo@example.com
+STU009,Elena Petrova,elena.petrova@example.com,ACTIVE,2026B,MEN003,Hannah Reyes,hannah.reyes@example.com
+STU010,Tomas Silva,tomas.silva@example.com,WITHDRAWN,2026A,MEN001,Grace Whitfield,grace.whitfield@example.com
