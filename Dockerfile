@@ -4,7 +4,7 @@ FROM maven:3.9.9-eclipse-temurin-17 AS build
 WORKDIR /workspace
 
 COPY doxabeta-management_1/doxabeta-management/pom.xml ./pom.xml
-RUN mvn -q dependency:go-offline
+RUN mvn dependency:resolve -U
 
 COPY doxabeta-management_1/doxabeta-management/src ./src
 RUN mvn clean package -DskipTests
@@ -17,4 +17,4 @@ EXPOSE 8080
 
 COPY --from=build /workspace/target/*.jar /app/app.jar
 
-ENTRYPOINT ["sh", "-c", "if [ -n \"$DATABASE_URL\" ] && [ -z \"$SPRING_DATASOURCE_URL\" ] && [ -z \"$JDBC_DATABASE_URL\" ]; then export JDBC_DATABASE_URL=\"$(printf '%s' \"$DATABASE_URL\" | sed -E 's#^postgres(ql)?://#jdbc:postgresql://#')\"; fi; exec java -jar /app/app.jar"]
+ENTRYPOINT ["sh", "-c", "java -jar /app/app.jar"]
