@@ -16,5 +16,7 @@ ENV PORT=8080
 EXPOSE 8080
 
 COPY --from=build /workspace/target/*.jar /app/app.jar
+COPY render-entrypoint.sh /usr/local/bin/render-entrypoint.sh
+RUN chmod +x /usr/local/bin/render-entrypoint.sh
 
-ENTRYPOINT ["sh", "-c", "java -jar /app/app.jar"]
+ENTRYPOINT ["/usr/local/bin/render-entrypoint.sh"]
