@@ -44,6 +44,7 @@
 /workspaces/doxabeta_student_management/doxabeta-management_1/doxabeta-management/src/main/java/com/doxabeta/controller/MentorController.java
 /workspaces/doxabeta_student_management/doxabeta-management_1/doxabeta-management/src/main/java/com/doxabeta/dto/AdminRawJsonResponse.java
 /workspaces/doxabeta_student_management/doxabeta-management_1/doxabeta-management/src/main/java/com/doxabeta/dto/ReviewResponse.java
+/workspaces/doxabeta_student_management/doxabeta-management_1/doxabeta-management/src/main/java/com/doxabeta/controller/MeController.java
 /workspaces/doxabeta_student_management/doxabeta-management_1/doxabeta-management/src/main/java/com/doxabeta/service/AdminService.java
 /workspaces/doxabeta_student_management/doxabeta-management_1/doxabeta-management/src/main/java/com/doxabeta/entity/StudentStatus.java
 /workspaces/doxabeta_student_management/doxabeta-management_1/doxabeta-management/src/main/java/com/doxabeta/entity/Assignment.java
