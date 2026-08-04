@@ -24,10 +24,10 @@ spring:
 
   h2:
     console:
-      # Enables the H2 web console at /h2-console (see SecurityConfig, which
-      # permits this path without login, and README.md for the JDBC URL to
-      # use when connecting). Handy for poking at the seeded data directly.
-      enabled: true
+      # Disabled by default so cloud/deployment starts don't accidentally
+      # instantiate the local-development-only H2 console path while a real
+      # Postgres datasource is expected.
+      enabled: false
       path: /h2-console
 
   jpa:

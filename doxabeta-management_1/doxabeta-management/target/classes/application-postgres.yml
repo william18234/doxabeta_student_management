@@ -10,6 +10,10 @@
 # still comes from application.yml.
 
 spring:
+  autoconfigure:
+    exclude:
+      - org.springframework.boot.autoconfigure.h2.H2ConsoleAutoConfiguration
+
   datasource:
     # Prefer Spring Boot's standard datasource env names when they are set.
     # On hosted providers such as Render, the connection string often arrives
