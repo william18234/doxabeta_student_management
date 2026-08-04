@@ -17,4 +17,4 @@ EXPOSE 8080
 
 COPY --from=build /workspace/target/*.jar /app/app.jar
 
-ENTRYPOINT ["sh", "-c", "java -jar /app/app.jar"]
+ENTRYPOINT ["sh", "-c", "if [ -n \"$DATABASE_URL\" ] && [ -z \"$SPRING_DATASOURCE_URL\" ] && [ -z \"$JDBC_DATABASE_URL\" ]; then export JDBC_DATABASE_URL=\"$(printf '%s' \"$DATABASE_URL\" | sed -E 's#^postgres(ql)?://#jdbc:postgresql://#')\"; fi; exec java -jar /app/app.jar"]

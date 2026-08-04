@@ -11,14 +11,12 @@
 
 spring:
   datasource:
-    # All three connection settings default to a local Postgres instance
-    # (matching docker-compose-style local setups) but are meant to be
-    # overridden via environment variables when deploying — see
-    # .env.example and README.md's PostgreSQL section.
-    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/doxabeta}
-    username: ${DATABASE_USERNAME:postgres}
-    password: ${DATABASE_PASSWORD:postgres}
-    driver-class-name: org.postgresql.Driver
+    # Prefer Spring Boot's standard datasource env names when they are set,
+    # then fall back to Render-friendly JDBC and DATABASE_* aliases.
+    url: ${SPRING_DATASOURCE_URL:${JDBC_DATABASE_URL:${DATABASE_URL:jdbc:postgresql://localhost:5432/doxabeta}}}
+    username: ${SPRING_DATASOURCE_USERNAME:${DATABASE_USERNAME:${POSTGRES_USER:postgres}}}
+    password: ${SPRING_DATASOURCE_PASSWORD:${DATABASE_PASSWORD:${POSTGRES_PASSWORD:postgres}}}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
 
   jpa:
     hibernate:

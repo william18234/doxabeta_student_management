@@ -11,8 +11,11 @@
 
 spring:
   datasource:
-    # Prefer Spring Boot's standard datasource env names when they are set,
-    # then fall back to Render-friendly JDBC and DATABASE_* aliases.
+    # Prefer Spring Boot's standard datasource env names when they are set.
+    # On hosted providers such as Render, the connection string often arrives
+    # as DATABASE_URL=postgres://... rather than a JDBC URL. The runtime
+    # container normalizes that form automatically, and the value can also be
+    # supplied explicitly as JDBC_DATABASE_URL for the cleanest setup.
     url: ${SPRING_DATASOURCE_URL:${JDBC_DATABASE_URL:${DATABASE_URL:jdbc:postgresql://localhost:5432/doxabeta}}}
     username: ${SPRING_DATASOURCE_USERNAME:${DATABASE_USERNAME:${POSTGRES_USER:postgres}}}
     password: ${SPRING_DATASOURCE_PASSWORD:${DATABASE_PASSWORD:${POSTGRES_PASSWORD:postgres}}}
