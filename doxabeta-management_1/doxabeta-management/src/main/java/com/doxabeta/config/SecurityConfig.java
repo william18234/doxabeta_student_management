@@ -86,8 +86,8 @@ public class SecurityConfig {
                         // Admin-only routes
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
 
-                        // Everything else requires login
-                        .anyRequest().authenticated()
+                        // Everything else is PUBLIC (critical fix)
+                        .anyRequest().permitAll()
                 )
                 .httpBasic(Customizer.withDefaults());
 
